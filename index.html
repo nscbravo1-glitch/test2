@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>🎁 Surprise Gift for P'แพรว</title>
   <style>
     * {
@@ -24,46 +24,49 @@
       animation: bgPulse 15s infinite alternate;
       padding: 15px;
       touch-action: manipulation;
+      flex-direction: column;
+      gap: 30px;
     }
 
     @keyframes bgPulse {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
     }
 
-    .content-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* Wrapper แบ่งสองส่วน: รูปบน และ ส่วนกลางด้านล่าง */
+    .top-images {
       width: 100%;
       max-width: 1000px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 15px;
-      position: relative;
-      flex-wrap: wrap;
+      padding: 0 10px;
     }
 
-    /* สไตล์รูปภาพด้านข้าง */
     .side-image {
-      width: 200px;
-      height: 300px;
-      max-width: 25vw;
-      max-height: 50vh;
+      max-width: 40vw;
+      max-height: 300px;
+      width: auto;
+      height: auto;
       object-fit: contain;
       opacity: 0.9;
       transition: all 0.3s ease;
       filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
       flex-shrink: 0;
+      cursor: default;
+      user-select: none;
     }
 
     .side-image.left {
-      align-self: flex-start;
-      margin-top: 30px;
       transform: rotate(-5deg);
     }
 
     .side-image.right {
-      align-self: flex-end;
-      margin-bottom: 30px;
       transform: rotate(5deg);
     }
 
@@ -73,33 +76,31 @@
       filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
     }
 
-    /* ส่วนกลาง */
+    /* ส่วนกลางด้านล่าง: วิดีโอ + กล่องของขวัญ */
     .center-content {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
+      align-items: flex-start;
       width: 100%;
-      max-width: 400px;
-      gap: 20px;
-      order: 1;
-      flex: 1;
-      min-width: 280px;
+      max-width: 1000px;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 0 10px;
     }
 
-    /* สไตล์วิดีโอ */
     .video-wrapper {
-      width: 100%;
-      max-width: 400px;
+      width: 400px;
+      max-width: 90vw;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transform: translateY(30px);
-      opacity: 0;
-      transition: all 0.8s ease-out;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background: black;
       position: relative;
       z-index: 5;
       -webkit-overflow-scrolling: touch;
-      background: black;
+      transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+      opacity: 0;
+      transform: translateY(30px);
     }
 
     .video-wrapper.show {
@@ -125,15 +126,17 @@
       opacity: 0;
       transition: opacity 0.3s;
       padding: 8px;
+      pointer-events: none;
     }
 
     .video-wrapper:hover .video-controls,
     .video-wrapper:active .video-controls {
       opacity: 1;
+      pointer-events: auto;
     }
 
     .video-btn {
-      background: rgba(0,0,0,0.7);
+      background: rgba(0, 0, 0, 0.7);
       border: none;
       color: white;
       width: 36px;
@@ -148,27 +151,25 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* กล่องของขวัญ */
     .gift-container {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
+      width: 300px;
+      max-width: 90vw;
     }
 
     .gift-box {
-      width: 70vw;
-      max-width: 200px;
+      width: 100%;
       aspect-ratio: 1/1;
       background: linear-gradient(145deg, #ff7675, #d63031, #a83279);
       border-radius: 12px;
       position: relative;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3), 
-                  0 0 0 8px rgba(255,255,255,0.1),
-                  0 0 0 12px rgba(255,255,255,0.05);
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.3),
+        0 0 0 8px rgba(255, 255, 255, 0.1),
+        0 0 0 12px rgba(255, 255, 255, 0.05);
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       transform-style: preserve-3d;
@@ -189,18 +190,21 @@
       border-radius: 12px 12px 4px 4px;
       transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       z-index: 2;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25),
-                  inset 0 -4px 8px rgba(255,255,255,0.2);
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25),
+        inset 0 -4px 8px rgba(255, 255, 255, 0.2);
       transform-origin: bottom center;
-      border: 2px solid rgba(255,255,255,0.1);
+      border: 2px solid rgba(255, 255, 255, 0.1);
     }
 
     /* ริบบิ้น */
-    .ribbon-horizontal, .ribbon-vertical {
+    .ribbon-horizontal,
+    .ribbon-vertical {
       position: absolute;
       background: linear-gradient(145deg, #f1c40f, #f39c12, #e67e22);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25),
-                 inset 0 1px 2px rgba(255,255,255,0.3);
+      box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
     }
 
     .ribbon-horizontal {
@@ -231,12 +235,14 @@
       opacity: 0;
       transform: scale(0);
       transition: all 0.5s ease-out;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25),
-                 inset 0 1px 2px rgba(255,255,255,0.4);
-      filter: drop-shadow(0 0 4px rgba(255,215,0,0.7));
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.7));
     }
 
-    .ribbon-bow:before, .ribbon-bow:after {
+    .ribbon-bow:before,
+    .ribbon-bow:after {
       content: '';
       position: absolute;
       width: 100%;
@@ -265,8 +271,13 @@
     }
 
     @keyframes bowFloat {
-      0%, 100% { transform: scale(1) translateY(-8px); }
-      50% { transform: scale(1.04) translateY(-12px); }
+      0%,
+      100% {
+        transform: scale(1) translateY(-8px);
+      }
+      50% {
+        transform: scale(1.04) translateY(-12px);
+      }
     }
 
     .gift-content {
@@ -291,41 +302,53 @@
     .heart {
       font-size: 3rem;
       animation: pulse 1.3s infinite alternate, float 2.8s infinite ease-in-out;
-      text-shadow: 0 0 8px #ff0000, 
-                  0 0 16px #ff69b4,
-                  0 0 24px #ff1493;
+      text-shadow:
+        0 0 8px #ff0000,
+        0 0 16px #ff69b4,
+        0 0 24px #ff1493;
       transform-origin: center;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1.1); }
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1.1);
+      }
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(4deg); }
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-15px) rotate(4deg);
+      }
     }
 
-    /* สไตล์ข้อความ */
     .message {
       margin-top: 15px;
       font-size: clamp(1.6rem, 6vw, 2.5rem);
       color: white;
-      text-shadow: 0 2px 6px rgba(248, 248, 248, 0.5),
-                  0 0 8px rgba(255,255,255,0.5),
-                  0 0 16px rgba(255,20,147,0.7);
+      text-shadow:
+        0 2px 6px rgba(248, 248, 248, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.5),
+        0 0 16px rgba(255, 20, 147, 0.7);
       opacity: 0;
       transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-align: center;
       padding: 0 15px;
-      transform: translateY(20px);
       max-width: 90%;
       font-weight: bold;
       position: relative;
       z-index: 10;
       line-height: 1.3;
+      transform: translateY(20px);
     }
 
     .message-text {
@@ -336,9 +359,10 @@
 
     .message-emoji {
       display: inline-block;
-      text-shadow: 0 0 8px rgba(255,255,255,0.7),
-                  0 0 16px rgba(255,105,180,0.7);
-      filter: drop-shadow(0 0 4px rgba(255,20,147,0.6));
+      text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.7),
+        0 0 16px rgba(255, 105, 180, 0.7);
+      filter: drop-shadow(0 0 4px rgba(255, 20, 147, 0.6));
     }
 
     .open + .message {
@@ -346,287 +370,149 @@
       transform: translateY(0);
     }
 
-    /* คอนเฟตติและเอฟเฟกต์ */
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      opacity: 0;
-      z-index: 1;
-      animation: confetti-fall 3s linear forwards;
-      filter: drop-shadow(0 0 2px rgba(255,255,255,0.6));
-    }
-
-    @keyframes confetti-fall {
-      0% { transform: translateY(-80px) rotate(0deg) scale(0.7); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg) scale(1.1); opacity: 0; }
-    }
-
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .star {
-      position: absolute;
-      background-color: white;
-      border-radius: 50%;
-      animation: twinkle 2.5s infinite ease-in-out;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.5); }
-      50% { opacity: 0.8; transform: scale(1); }
-    }
-
     /* Responsive design */
     @media (max-width: 900px) {
-      .content-wrapper {
-        flex-direction: column;
+      .top-images {
+        gap: 20px;
       }
-      
+
       .side-image {
-        width: 150px;
-        height: 225px;
-        margin: 10px 0;
-        align-self: center !important;
+        max-width: 45vw;
+        max-height: 250px;
         transform: none !important;
       }
-      
+
       .side-image:hover {
         transform: scale(1.05) !important;
       }
-      
+
       .center-content {
-        order: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .video-wrapper {
+        width: 90vw;
+        max-width: 400px;
+      }
+
+      .gift-container {
+        width: 90vw;
+        max-width: 300px;
       }
     }
 
     @media (max-width: 480px) {
       .side-image {
-        width: 120px;
-        height: 180px;
+        max-width: 90vw;
+        max-height: 200px;
       }
-      
-      .gift-box {
-        max-width: 180px;
+
+      .gift-container {
+        max-width: 90vw;
       }
-      
+
       .heart {
         font-size: 2.5rem;
       }
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
 </head>
 <body>
-  <div class="stars" id="stars"></div>
-  
-  <div class="content-wrapper">
-    <!-- รูปภาพด้านซ้าย -->
-    <img src="png1.png" class="side-image left" alt="Decoration left">
-    
-    <!-- ส่วนกลาง -->
-    <div class="center-content">
-      <!-- วิดีโอ -->
-      <div class="video-wrapper" id="videoWrapper">
-        <video id="birthdayVideo" playsinline webkit-playsinline x-webkit-airplay="allow" 
-               disablepictureinpicture controlslist="nodownload nofullscreen">
-          <source src="vd1.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <div class="video-controls">
-          <button class="video-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-          <button class="video-btn" id="muteBtn"><i class="fas fa-volume-up"></i></button>
-        </div>
-      </div>
-      
-      <!-- กล่องของขวัญและข้อความ -->
-      <div class="gift-container">
-        <div class="gift-box" id="gift">
-          <div class="lid"></div>
-          <div class="ribbon-horizontal"></div>
-          <div class="ribbon-vertical"></div>
-          <div class="ribbon-bow"></div>
-          <div class="gift-content">
-            <div class="heart">❤️</div>
-          </div>
-        </div>
-        <div class="message" id="message">
-          <span class="message-text">Happy Birthday P'แพรว</span>
-          <span class="message-emoji">🎉</span>
-        </div>
+  <!-- รูปภาพสองข้างด้านบน -->
+  <div class="top-images">
+    <img src="png1.png" class="side-image left" alt="Decoration left" />
+    <img src="png2.png" class="side-image right" alt="Decoration right" />
+  </div>
+
+  <!-- วิดีโอและกล่องของขวัญ อยู่ข้างล่าง -->
+  <div class="center-content">
+    <div class="video-wrapper" id="videoWrapper">
+      <video
+        id="birthdayVideo"
+        playsinline
+        webkit-playsinline
+        x-webkit-airplay="allow"
+        disablepictureinpicture
+        controlslist="nodownload nofullscreen"
+      >
+        <source src="vd1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="video-controls">
+        <button class="video-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
+        <button class="video-btn" id="muteBtn"><i class="fas fa-volume-up"></i></button>
       </div>
     </div>
 
-    <!-- รูปภาพด้านขวา -->
-    <img src="png2.png" class="side-image right" alt="Decoration right">
+    <div class="gift-container">
+      <div class="gift-box" id="gift">
+        <div class="lid"></div>
+        <div class="ribbon-horizontal"></div>
+        <div class="ribbon-vertical"></div>
+        <div class="ribbon-bow"></div>
+        <div class="gift-content">
+          <div class="heart">❤️</div>
+        </div>
+      </div>
+      <div class="message" id="message">
+        <span class="message-text">Happy Birthday P'แพรว</span>
+        <span class="message-emoji">🎉</span>
+      </div>
+    </div>
   </div>
 
   <script>
-    // องค์ประกอบหลัก
     const gift = document.getElementById('gift');
     const message = document.getElementById('message');
-    const starsContainer = document.getElementById('stars');
     const videoWrapper = document.getElementById('videoWrapper');
     const birthdayVideo = document.getElementById('birthdayVideo');
     const playPauseBtn = document.getElementById('playPauseBtn');
     const muteBtn = document.getElementById('muteBtn');
-    
-    // ตรวจสอบว่าเป็น iOS หรือไม่
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    }
-    
-    // สร้างดาวบนพื้นหลัง
-    function createStars() {
-      for (let i = 0; i < 40; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.width = Math.random() * 3 + 1 + 'px';
-        star.style.height = star.style.width;
-        star.style.animationDelay = Math.random() * 2 + 's';
-        starsContainer.appendChild(star);
+
+    // เปิดกล่องของขวัญ
+    gift.addEventListener('click', () => {
+      if (!gift.classList.contains('open')) {
+        gift.classList.add('open');
+        message.style.opacity = '1';
+        message.style.transform = 'translateY(0)';
+      } else {
+        gift.classList.remove('open');
+        message.style.opacity = '0';
+        message.style.transform = 'translateY(20px)';
       }
-    }
-    
-    // สร้างคอนเฟตติ
-    function createConfetti() {
-      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-      const shapes = ['❤️', '✨', '🌟', '🎉', '🎁', '🥳', '🎂', '🌸'];
-      
-      for (let i = 0; i < 60; i++) {
-        setTimeout(() => {
-          const confetti = document.createElement('div');
-          confetti.className = 'confetti';
-          confetti.style.left = Math.random() * 100 + 'vw';
-          
-          if (Math.random() > 0.7) {
-            confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-            confetti.style.fontSize = Math.random() * 16 + 8 + 'px';
-            confetti.style.background = 'transparent';
-          } else {
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-          }
-          
-          confetti.style.animation = `confetti-fall ${Math.random() * 2 + 1.5}s linear forwards`;
-          document.body.appendChild(confetti);
-          
-          setTimeout(() => confetti.remove(), 4000);
-        }, Math.random() * 800);
-      }
-    }
-    
-    // ควบคุมวิดีโอ
-    function setupVideoControls() {
-      // iOS Hack
-      birthdayVideo.setAttribute('playsinline', '');
-      birthdayVideo.setAttribute('webkit-playsinline', '');
-      birthdayVideo.setAttribute('x-webkit-airplay', 'allow');
-      
-      // ป้องกันการเข้า fullscreen
-      birthdayVideo.addEventListener('webkitbeginfullscreen', function(e) {
-        e.preventDefault();
-        birthdayVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      
-      // เล่น/หยุด
-      playPauseBtn.addEventListener('click', async () => {
-        if (birthdayVideo.paused) {
-          try {
-            if (isIOS()) {
-              birthdayVideo.muted = true;
-              await birthdayVideo.play();
-              setTimeout(() => { birthdayVideo.muted = false; }, 500);
-            } else {
-              await birthdayVideo.play();
-            }
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-          } catch (err) {
-            console.error('Playback failed:', err);
-          }
-        } else {
-          birthdayVideo.pause();
-          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        }
-      });
-      
-      // เปิด/ปิดเสียง
-      muteBtn.addEventListener('click', () => {
-        birthdayVideo.muted = !birthdayVideo.muted;
-        muteBtn.innerHTML = birthdayVideo.muted 
-          ? '<i class="fas fa-volume-mute"></i>' 
-          : '<i class="fas fa-volume-up"></i>';
-      });
-      
-      // อัพเดทปุ่มเมื่อวิดีโอเล่น/หยุด
-      birthdayVideo.addEventListener('play', () => {
+    });
+
+    // ควบคุมเล่น/หยุด วิดีโอ
+    playPauseBtn.addEventListener('click', () => {
+      if (birthdayVideo.paused) {
+        birthdayVideo.play();
         playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-      });
-      
-      birthdayVideo.addEventListener('pause', () => {
+      } else {
+        birthdayVideo.pause();
         playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-      });
-    }
-    
-    // การทำงานของกล่องของขวัญ
-    function setupGiftBox() {
-      gift.addEventListener('click', async (event) => {
-        gift.classList.toggle('open');
-        
-        if (gift.classList.contains('open')) {
-          createConfetti();
-          videoWrapper.classList.add('show');
-          
-          try {
-            if (isIOS()) {
-              birthdayVideo.muted = true;
-              await birthdayVideo.play();
-              setTimeout(() => { birthdayVideo.muted = false; }, 500);
-            } else {
-              await birthdayVideo.play();
-            }
-          } catch (err) {
-            console.error('Playback failed:', err);
-          }
-          
-          setTimeout(() => {
-            const emojiContainer = document.createElement('span');
-            emojiContainer.className = 'message-emoji';
-            emojiContainer.innerHTML = ' 🥳🎂✨💖🌸🎈🎊';
-            message.appendChild(emojiContainer);
-          }, 800);
-        } else {
-          message.innerHTML = `
-            <span class="message-text">Happy Birthday P'แพรว</span>
-            <span class="message-emoji">🎉</span>
-          `;
-          videoWrapper.classList.remove('show');
-          birthdayVideo.pause();
-          birthdayVideo.currentTime = 0;
-        }
-      });
-    }
-    
-    // เริ่มต้นการทำงาน
-    function init() {
-      createStars();
-      setupVideoControls();
-      setupGiftBox();
-      
-      // iOS ต้องการ user interaction ก่อน
-      document.addEventListener('touchstart', function() {}, { once: true });
-    }
-    
-    window.addEventListener('DOMContentLoaded', init);
+      }
+    });
+
+    // ควบคุมเสียง เปิด/ปิดเสียง
+    muteBtn.addEventListener('click', () => {
+      birthdayVideo.muted = !birthdayVideo.muted;
+      muteBtn.innerHTML = birthdayVideo.muted
+        ? '<i class="fas fa-volume-mute"></i>'
+        : '<i class="fas fa-volume-up"></i>';
+    });
+
+    // เมื่อโหลดหน้า แสดงวิดีโอด้วย animation เล็กน้อย
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        videoWrapper.classList.add('show');
+      }, 500);
+    });
   </script>
 </body>
 </html>
