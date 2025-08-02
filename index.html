@@ -22,7 +22,7 @@
       overflow-x: hidden;
       perspective: 1000px;
       animation: bgPulse 15s infinite alternate;
-      padding: 20px;
+      padding: 15px;
       touch-action: manipulation;
     }
 
@@ -33,32 +33,44 @@
 
     .content-wrapper {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       width: 100%;
-      max-width: 1200px;
-      gap: 20px;
-      position: relative;
-    }
-
-    /* สไตล์รูปภาพด้านข้าง - ปรับใหม่สำหรับมือถือ */
-    .side-images-container {
-      display: flex;
-      justify-content: center;
+      max-width: 1000px;
       gap: 15px;
-      width: 100%;
-      order: 1; /* วางไว้ด้านบนสุด */
-      margin-bottom: 10px;
+      position: relative;
+      flex-wrap: wrap;
     }
 
+    /* สไตล์รูปภาพด้านข้าง */
     .side-image {
-      width: 120px;
-      height: 180px;
+      width: 200px;
+      height: 300px;
+      max-width: 25vw;
+      max-height: 50vh;
       object-fit: contain;
       opacity: 0.9;
       transition: all 0.3s ease;
       filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+      flex-shrink: 0;
+    }
+
+    .side-image.left {
+      align-self: flex-start;
+      margin-top: 30px;
+      transform: rotate(-5deg);
+    }
+
+    .side-image.right {
+      align-self: flex-end;
+      margin-bottom: 30px;
+      transform: rotate(5deg);
+    }
+
+    .side-image:hover {
+      opacity: 1;
+      transform: rotate(0);
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
     }
 
     /* ส่วนกลาง */
@@ -67,16 +79,18 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      max-width: 500px;
+      max-width: 400px;
       gap: 20px;
-      order: 2; /* วางตรงกลาง */
+      order: 1;
+      flex: 1;
+      min-width: 280px;
     }
 
     /* สไตล์วิดีโอ */
     .video-wrapper {
       width: 100%;
       max-width: 400px;
-      border-radius: 15px;
+      border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
       transform: translateY(30px);
@@ -134,19 +148,20 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* สไตล์กล่องของขวัญ */
+    /* กล่องของขวัญ */
     .gift-container {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      z-index: 10;
       width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
     }
 
     .gift-box {
-      width: 60vw;
-      max-width: 220px;
+      width: 70vw;
+      max-width: 200px;
       aspect-ratio: 1/1;
       background: linear-gradient(145deg, #ff7675, #d63031, #a83279);
       border-radius: 12px;
@@ -274,7 +289,7 @@
     }
 
     .heart {
-      font-size: 3.2rem;
+      font-size: 3rem;
       animation: pulse 1.3s infinite alternate, float 2.8s infinite ease-in-out;
       text-shadow: 0 0 8px #ff0000, 
                   0 0 16px #ff69b4,
@@ -296,7 +311,7 @@
     /* สไตล์ข้อความ */
     .message {
       margin-top: 15px;
-      font-size: clamp(1.6rem, 6vw, 3rem);
+      font-size: clamp(1.6rem, 6vw, 2.5rem);
       color: white;
       text-shadow: 0 2px 6px rgba(248, 248, 248, 0.5),
                   0 0 8px rgba(255,255,255,0.5),
@@ -369,52 +384,41 @@
       50% { opacity: 0.8; transform: scale(1); }
     }
 
-    /* Responsive design สำหรับมือถือ */
-    @media (min-width: 768px) {
+    /* Responsive design */
+    @media (max-width: 900px) {
       .content-wrapper {
-        flex-direction: row;
-        gap: 30px;
-      }
-      
-      .side-images-container {
         flex-direction: column;
-        order: 0;
-        width: auto;
-        margin-bottom: 0;
       }
       
       .side-image {
-        width: 180px;
-        height: 270px;
-      }
-      
-      .side-image.left {
-        transform: translateX(-15px) rotate(-5deg);
-      }
-      
-      .side-image.right {
-        transform: translateX(15px) rotate(5deg);
+        width: 150px;
+        height: 225px;
+        margin: 10px 0;
+        align-self: center !important;
+        transform: none !important;
       }
       
       .side-image:hover {
-        opacity: 1;
-        transform: translateX(0) rotate(0);
-        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+        transform: scale(1.05) !important;
       }
       
-      .gift-box {
-        max-width: 250px;
-      }
-      
-      .heart {
-        font-size: 4rem;
+      .center-content {
+        order: 0;
       }
     }
 
-    @media (min-width: 992px) {
+    @media (max-width: 480px) {
       .side-image {
-        width: 220px;
-        height: 330px;
+        width: 120px;
+        height: 180px;
+      }
+      
+      .gift-box {
+        max-width: 180px;
+      }
+      
+      .heart {
+        font-size: 2.5rem;
       }
     }
   </style>
@@ -424,11 +428,8 @@
   <div class="stars" id="stars"></div>
   
   <div class="content-wrapper">
-    <!-- Container สำหรับรูปภาพด้านข้าง (แสดงในแนวนอนบนมือถือ) -->
-    <div class="side-images-container">
-      <img src="png1.png" class="side-image left" alt="Decoration left">
-      <img src="png2.png" class="side-image right" alt="Decoration right">
-    </div>
+    <!-- รูปภาพด้านซ้าย -->
+    <img src="png1.png" class="side-image left" alt="Decoration left">
     
     <!-- ส่วนกลาง -->
     <div class="center-content">
@@ -462,6 +463,9 @@
         </div>
       </div>
     </div>
+
+    <!-- รูปภาพด้านขวา -->
+    <img src="png2.png" class="side-image right" alt="Decoration right">
   </div>
 
   <script>
